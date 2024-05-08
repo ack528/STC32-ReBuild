@@ -2,7 +2,6 @@
 
 void adc_get(int *temp)
 {
-
     int a1[4], a2[4], a3[4], a4[4];
 
     a1[0] = (adc_once(ADC_P10, ADC_12BIT));
@@ -10,20 +9,20 @@ void adc_get(int *temp)
     a3[0] = (adc_once(ADC_P11, ADC_12BIT));
     a4[0] = (adc_once(ADC_P06, ADC_12BIT));
 
-    a2[1] = (adc_once(ADC_P10, ADC_12BIT));
-    a3[1] = (adc_once(ADC_P14, ADC_12BIT));
-    a4[1] = (adc_once(ADC_P11, ADC_12BIT));
-    a1[1] = (adc_once(ADC_P06, ADC_12BIT));
+    a1[1] = (adc_once(ADC_P10, ADC_12BIT));
+    a2[1] = (adc_once(ADC_P14, ADC_12BIT));
+    a3[1] = (adc_once(ADC_P11, ADC_12BIT));
+    a4[1] = (adc_once(ADC_P06, ADC_12BIT));
 
-    a3[2] = (adc_once(ADC_P10, ADC_12BIT));
-    a4[2] = (adc_once(ADC_P14, ADC_12BIT));
-    a1[2] = (adc_once(ADC_P11, ADC_12BIT));
-    a2[2] = (adc_once(ADC_P06, ADC_12BIT));
-
-    a4[3] = (adc_once(ADC_P10, ADC_12BIT));
-    a1[3] = (adc_once(ADC_P14, ADC_12BIT));
-    a2[3] = (adc_once(ADC_P11, ADC_12BIT));
-    a3[3] = (adc_once(ADC_P06, ADC_12BIT));
+    a1[2] = (adc_once(ADC_P10, ADC_12BIT));
+    a2[2] = (adc_once(ADC_P14, ADC_12BIT));
+    a3[2] = (adc_once(ADC_P11, ADC_12BIT));
+    a4[2] = (adc_once(ADC_P06, ADC_12BIT));
+	
+    a1[3] = (adc_once(ADC_P10, ADC_12BIT));
+    a2[3] = (adc_once(ADC_P14, ADC_12BIT));
+    a3[3] = (adc_once(ADC_P11, ADC_12BIT));
+    a4[3] = (adc_once(ADC_P06, ADC_12BIT));
 
     temp[0] = MeanFilter(a1, 4);
     temp[1] = MeanFilter(a2, 4);

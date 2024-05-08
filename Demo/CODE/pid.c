@@ -14,9 +14,9 @@ void InitPID(void)
 {
     motor_L_pid.SetValue        = 0.0;
     motor_L_pid.ActValue        = 0.0;
-    motor_L_pid.KP              = 70;
-    motor_L_pid.KI              = 2.6;
-    motor_L_pid.KD              = 0;
+    motor_L_pid.KP              = 25;
+    motor_L_pid.KI              = 12.5;
+    motor_L_pid.KD              = 30;
     motor_L_pid.ek              = 0.0;
     motor_L_pid.ek_1            = 0.0;
     motor_L_pid.ek_2            = 0.0;
@@ -27,9 +27,9 @@ void InitPID(void)
 
     motor_R_pid.SetValue        = 0.0;
     motor_R_pid.ActValue        = 0.0;
-    motor_R_pid.KP              = 70;
-    motor_R_pid.KI              = 2.6;
-    motor_R_pid.KD              = 0;
+    motor_R_pid.KP              = 25;
+    motor_R_pid.KI              = 12.5;
+    motor_R_pid.KD              = 30;
     motor_R_pid.ek              = 0.0;
     motor_R_pid.ek_1            = 0.0;
     motor_R_pid.ek_2            = 0.0;
@@ -69,7 +69,7 @@ void InitPID(void)
     dir_loop_pid.PIDmin         = -30.00;
 
 }
-///werq
+//flag=1时，对pid输出进行限幅
 float PID_Control_Inc(PID *pid, int flag)
 {
     float inc;
@@ -94,6 +94,8 @@ float PID_Control_Inc(PID *pid, int flag)
     pid->PIDout = inc;
     return inc;
 }
+
+//flag=1时，对pid输出进行限幅
 float PID_Control_Pos(PID *pid, int flag)
 {
     float Pos ;

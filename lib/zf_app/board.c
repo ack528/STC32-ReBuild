@@ -217,7 +217,7 @@ void board_init(void)
     pwm_init(PWM_4, 17000, 0); //≥ı ºªØPWM4
 	
 
-	printf("begin\r\n");
+		printf("begin\r\n");
 	
 }
 

@@ -3,16 +3,14 @@
   int duty_L=800,duty_R=800;
 float speed_section(float error,char i)
 {
-	return 100;
+	return 350;
 }
 void Get_Actual_Speed()
 {
-
 	motor_L_pid.ActValue=((float)encoder_L_get()*ActSpeed_Rate*500);
 	motor_R_pid.ActValue=((float)encoder_R_get()*ActSpeed_Rate*500);
 //	motor_L_pid.ActValue=((float)encoder_L_get());
 //	motor_R_pid.ActValue=((float)encoder_R_get());
-	
 }
 void Speed_Loop()
 {     
@@ -31,10 +29,11 @@ void Speed_Loop()
 
     inc_L = PID_Control_Inc(&motor_L_pid,0);
     inc_R = PID_Control_Inc(&motor_R_pid,0);
-    duty_L += inc_L;
-    duty_R += inc_R;
+		
+    duty_L += inc_L;			//增量式pid输出的是增量，要累加
+    duty_R += inc_R;			//增量式pid输出的是增量，要累加
 
-    if(duty_L < duty_min)
+    if(duty_L < duty_min)	//pwm限幅
         duty_L = duty_min;
     if(duty_R< duty_min)
         duty_R = duty_min;
@@ -44,7 +43,7 @@ void Speed_Loop()
     if(duty_R > duty_max)
         duty_R = duty_max;
 		duty_set(duty_L,duty_R);
-//		duty_set(2000,2000);
+//	duty_set(2000,2000);
 
 }
 
