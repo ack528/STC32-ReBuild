@@ -21,8 +21,8 @@ int main()
     }
     EnableGlobalIRQ(); // 开启总中断
     printf("all init\r\n");
-    motor_L_pid.SetValue = 350;
-    motor_R_pid.SetValue = 350;
+    motor_L_pid.SetValue = 160; //还需要更改speed.c中的速度
+    motor_R_pid.SetValue = 160;
     printf("motor pid set value\r\n");
     while (1)
     {

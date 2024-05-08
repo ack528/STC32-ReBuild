@@ -3,7 +3,7 @@
   int duty_L=800,duty_R=800;
 float speed_section(float error,char i)
 {
-	return 350;
+	return 160;
 }
 void Get_Actual_Speed()
 {

@@ -36,15 +36,13 @@ void InitPID(void)
     motor_R_pid.ek_sum          = 0.0;
     motor_R_pid.PIDmax          = motor_L_pid.PIDmax;
     motor_R_pid.PIDmin   		    = motor_L_pid.PIDmin;
-//  motor_R_pid.Sum_max    	 	  = motor_L_pid.Sum_max;
-//  motor_R_pid.Sum_min     		= motor_L_pid.Sum_min;
     motor_R_pid.PIDout      		= 0;
 
     dir_loop_pid.SetValue       = 0.00;
     dir_loop_pid.ActValue   		= 0.00;
-    dir_loop_pid.KP             = 240;
+    dir_loop_pid.KP             = 50;
     dir_loop_pid.KI         		= 0;
-    dir_loop_pid.KD        			= 400;
+    dir_loop_pid.KD        			= 0;
     dir_loop_pid.ek         		= 0.00;
     dir_loop_pid.ek_1           = 0.00;
     dir_loop_pid.ek_2           = 0.00;
@@ -54,19 +52,19 @@ void InitPID(void)
     dir_loop_pid.PIDmax         = 30.00;
     dir_loop_pid.PIDmin         = -30.00;
 
-    dir_loop_pid.SetValue       = 0.00;
-    dir_loop_pid.ActValue    		= 0.00;
-    dir_loop_pid.KP             = 240;
-    dir_loop_pid.KI         		= 0;
-    dir_loop_pid.KD         		= 400;
-    dir_loop_pid.ek         		= 0.00;
-    dir_loop_pid.ek_1           = 0.00;
-    dir_loop_pid.ek_2           = 0.00;
-    dir_loop_pid.ek_sum    		  = 0.00;
-    dir_loop_pid.Sum_max        = 1.00;
-    dir_loop_pid.Sum_min        = -1.00;
-    dir_loop_pid.PIDmax         = 30.00;
-    dir_loop_pid.PIDmin         = -30.00;
+//    dir_loop_pid.SetValue       = 0.00;
+//    dir_loop_pid.ActValue    		= 0.00;
+//    dir_loop_pid.KP             = 240;
+//    dir_loop_pid.KI         		= 0;
+//    dir_loop_pid.KD         		= 400;
+//    dir_loop_pid.ek         		= 0.00;
+//    dir_loop_pid.ek_1           = 0.00;
+//    dir_loop_pid.ek_2           = 0.00;
+//    dir_loop_pid.ek_sum    		  = 0.00;
+//    dir_loop_pid.Sum_max        = 1.00;
+//    dir_loop_pid.Sum_min        = -1.00;
+//    dir_loop_pid.PIDmax         = 30.00;
+//    dir_loop_pid.PIDmin         = -30.00;
 
 }
 //flag=1时，对pid输出进行限幅

@@ -1,33 +1,10 @@
 #include "headfile.h"
-char state[30] = {Track, Small_Circ_Right, Track, Obstacle, Track, Track, Stop};
 int state_lead = 0;
 int Flag_Circ = 0;				//圆环不同阶段的指针
 int Flag_Obstacle = 0;
 int flag_turn = 0;				//直路元素的指针
 float Sum_Distance = 0, Sum_Angle = 0;
-
-//enum element
-//{
-//	Stop=0,
-//	Start=1,
-//	Track=2,
-//	Bend=3,
-//	Big_Circ_Left=4,
-//	Big_Circ_Right=5,
-//	Small_Circ_Left=6,
-//	Small_Circ_Right=7,
-//	Obstacle=8,
-//	Ramp=9,
-//	Garage_Out=10,
-//	Garage_In=11,
-//};
-//enum Track
-//{
-//	cross=1,
-//	right_angle=2,
-//	normal=3,
-//};
-//char state[30] = {Track, Small_Circ_Right, Track, Obstacle, Track, Track, Stop};
+char state[30] = {Track, Small_Circ_Right, Track, Track, Track, Track, Stop};	//赛道元素顺序
 void state_detect(int *temp)
 {
     adc_get(temp);
@@ -109,24 +86,24 @@ int Track_Jump(int *temp)	//只要检测到元素就返回1
 						break;
     }
 		
-    switch (flag_turn)				//没检测到元素，就根据直道元素指针执行操作							
-    {
-				case cross:						//十字
-						Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-						if (Sum_Distance > 40)
-						{
-								Sum_Distance = 0;
-								flag_turn = 0;
-						}
-						return 0;
-						break;
-				case right_angle:
-						break;
-				case normal:
-						break;
-				default :
-						break;
-    }
+//    switch (flag_turn)				//没检测到元素，就根据直道元素指针执行操作							
+//    {
+//				case cross:						//十字
+//						Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+//						if (Sum_Distance > 40)
+//						{
+//								Sum_Distance = 0;
+//								flag_turn = 0;
+//						}
+//						return 0;
+//						break;
+//				case right_angle:
+//						break;
+//				case normal:
+//						break;
+//				default :
+//						break;
+//    }
 
 //  if(max_count(temp[5],temp[6])>600&&min_count(temp[5],temp[6])>600&&temp[4]>800&&temp[7]>800)
 //  {
@@ -135,22 +112,22 @@ int Track_Jump(int *temp)	//只要检测到元素就返回1
 //									adc_value[3],adc_value[4],adc_value[5],adc_value[6],adc_value[7]);
 //  }
 		
-    if (abs(temp[5] - temp[6]) > 400)
-    {
-        flag_turn = right_angle;
-    }
-    else
-    {
-        flag_turn = normal;
-    }
-    return 0;
+//    if (abs(temp[5] - temp[6]) > 400)
+//    {
+//        flag_turn = right_angle;
+//    }
+//    else
+//    {
+//        flag_turn = normal;
+//    }
+//    return 0;
 }
 int Big_Circ_Left_Jump(int *Flag)		//走完所有阶段才会返回1，才会继续检测下一个元素
 {
     switch (*Flag)
     {
     case 1:
-        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
         if (Sum_Distance > 50)
         {
 
