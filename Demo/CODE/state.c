@@ -4,7 +4,7 @@ int Flag_Circ = 0;				//圆环不同阶段的指针
 int Flag_Obstacle = 0;
 int flag_turn = 0;				//直路元素的指针
 float Sum_Distance = 0, Sum_Angle = 0;
-char state[30] = {Track, Small_Circ_Right, Track, Track, Track, Track, Stop};	//赛道元素顺序
+char state[30] = {Track, Big_Circ_Left, Track, Track, Track, Track, Stop};	//赛道元素顺序
 void state_detect(int *temp)
 {
     adc_get(temp);
@@ -120,7 +120,7 @@ int Track_Jump(int *temp)	//只要检测到元素就返回1
 //    {
 //        flag_turn = normal;
 //    }
-//    return 0;
+    return 0;			//没有检测到元素，返回0
 }
 int Big_Circ_Left_Jump(int *Flag)		//走完所有阶段才会返回1，才会继续检测下一个元素
 {
@@ -128,19 +128,21 @@ int Big_Circ_Left_Jump(int *Flag)		//走完所有阶段才会返回1，才会继续检测下一个元
     {
     case 1:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
-        if (Sum_Distance > 50)
+        if (Sum_Distance > 95)
         {
 
             Sum_Distance = 0;
             (*Flag)++;
+						//state_lead = 6;
         }
         break;
     case 2:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 35)
+        if (Sum_Angle > 20)
         {
             Sum_Angle = 0;
             (*Flag)++;
+						//state_lead = 6;
         }
         break;
     case 3:
@@ -149,11 +151,12 @@ int Big_Circ_Left_Jump(int *Flag)		//走完所有阶段才会返回1，才会继续检测下一个元
         {
             Sum_Angle = 0;
             (*Flag)++;
+//						state_lead = 6;
         }
         break;
     case 4:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 60)
+        if (Sum_Distance > 40)
         {
             Sum_Distance = 0;
             (*Flag) = 0;

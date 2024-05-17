@@ -3,6 +3,7 @@
 //float cs_motor_r_pid[3]={50,10.5,15};
 //float cs_dir_loop_pid[3]={160,0,300};
 int adc_value[8] = {0};
+
 int i = 0;
 float sum = 0;
 uint8 uart_delay = 0;
@@ -21,14 +22,13 @@ int main()
     }
     EnableGlobalIRQ(); // 开启总中断
     printf("all init\r\n");
-    motor_L_pid.SetValue = 160; //还需要更改speed.c中的速度
+    motor_L_pid.SetValue = 160; //还需要更改speed.c中的速度和speed_goal
     motor_R_pid.SetValue = 160;
     printf("motor pid set value\r\n");
     while (1)
     {
         if (TIM1_Flag)
         {
-            P72 = 1;
             P52 = 0;
 //          dl1b_get_distance();
             imu660ra_get_gyro();
@@ -43,24 +43,28 @@ int main()
                 switch (state[state_lead])
                 {
 										case Track:
-												P67 = 0;
-												Track_Action(adc_value);
-												break;
+													P67 = 0;
+													Track_Action(adc_value);
+													break;
 										case Big_Circ_Left:
+													P67 = 1;
+													Circ_Left_Action(adc_value);
+													break;
 										case Small_Circ_Left:
-												Circ_Left_Action(adc_value);
-												break;
+													Circ_Left_Action(adc_value);
+													break;
 										case Big_Circ_Right:
+													Circ_Right_Action(adc_value);
+													break;
 										case Small_Circ_Right:
-												P67 = 1;
-												Circ_Right_Action(adc_value);
-												break;
+													Circ_Right_Action(adc_value);
+													break;
 										case Obstacle:
-												printf(".....\r\n");
-												Obstacle_Action();
-												break;
+													printf(".....\r\n");
+													Obstacle_Action();
+													break;
 										case Stop:
-												Stop_Action();
+													Stop_Action();
                 }
 //            }
             //i+=1;
@@ -84,18 +88,19 @@ int main()
 //						lcd_showint32(0,1,adc_value[1],4);
 //						lcd_showint32(0,2,adc_value[2],4);
 //						lcd_showint32(0,3,adc_value[3],4);
+//						lcd_showint32(0,0,(int)state_lead,4);
             uart_delay++;
             if (uart_delay > 4)
             {
                 uart_delay = 0;
-//                printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
-//																					motor_L_pid.SetValue, motor_R_pid.SetValue);
+                printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
+																					motor_L_pid.SetValue, motor_R_pid.SetValue);
 //								printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
 //																					adc_value[2], adc_value[3]);
             }
 //					printf("%d\r\n",flag_turn);
             TIM1_Flag = 0;
-            P72 = 0;
+            P52 = 1;
         }
 
     }

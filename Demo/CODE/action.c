@@ -1,5 +1,5 @@
 #include "headfile.h"
-float speed_goal = 200;
+float speed_goal = 220;
 float error = 0;
 float error_rate = 0;
 int count = 0;
@@ -30,15 +30,16 @@ void Circ_Left_Action(int *temp)//左环
     switch (Flag_Circ)
     {
     case 1:
-        speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值都是60
+        speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
         Dir_Loop(error, speed_goal, flag_turn);
         break;
     case 2:
         motor_L_pid.SetValue = 0;
-        motor_R_pid.SetValue = speed_goal * 2;
+        motor_R_pid.SetValue = speed_goal * 1.2;
         break;
     case 3:
-        speed_goal = speed_section(error, state[state_lead]);
+        speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
+        Dir_Loop(error, speed_goal, flag_turn);
         break;
     case 4:
         motor_L_pid.SetValue = speed_goal;

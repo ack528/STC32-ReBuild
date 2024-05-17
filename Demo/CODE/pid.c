@@ -14,9 +14,9 @@ void InitPID(void)
 {
     motor_L_pid.SetValue        = 0.0;
     motor_L_pid.ActValue        = 0.0;
-    motor_L_pid.KP              = 25;
-    motor_L_pid.KI              = 12.5;
-    motor_L_pid.KD              = 30;
+    motor_L_pid.KP              = 60;
+    motor_L_pid.KI              = 2.9;
+    motor_L_pid.KD              = 0;
     motor_L_pid.ek              = 0.0;
     motor_L_pid.ek_1            = 0.0;
     motor_L_pid.ek_2            = 0.0;
@@ -27,9 +27,9 @@ void InitPID(void)
 
     motor_R_pid.SetValue        = 0.0;
     motor_R_pid.ActValue        = 0.0;
-    motor_R_pid.KP              = 25;
-    motor_R_pid.KI              = 12.5;
-    motor_R_pid.KD              = 30;
+		motor_R_pid.KP              = 60;		//25		60
+    motor_R_pid.KI              = 2.9;	//12.5	2.9
+    motor_R_pid.KD              = 0;		//30		0
     motor_R_pid.ek              = 0.0;
     motor_R_pid.ek_1            = 0.0;
     motor_R_pid.ek_2            = 0.0;

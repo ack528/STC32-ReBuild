@@ -88,8 +88,8 @@ void Dir_Loop(float error, float speed_goal, int flag)
     {
         dir_loop_pid.KP = Kp_Select(error);
         dir_loop_pid.ek =  error;
-				temp =  fabs(error) * 800 * dir_loop_pid.ek 
-								+ 150 * dir_loop_pid.ek
+				temp =  fabs(error) * 800* dir_loop_pid.ek //800 250  /600 300
+								+ 250 * dir_loop_pid.ek
 								- imu660ra_gyro_z / 65.6
 								+ dir_loop_pid.KD * (dir_loop_pid.ek - dir_loop_pid.ek_1);
 //      printf("%f\r\n",error);
