@@ -42,8 +42,8 @@ void Speed_Loop()
         duty_L = duty_max;
     if(duty_R > duty_max)
         duty_R = duty_max;
-		duty_set(duty_L,duty_R);
-//	duty_set(2000,2000);
+//		duty_set(duty_L,duty_R);
+	duty_set(-2000,-2000);
 
 }
 

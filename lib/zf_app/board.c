@@ -186,14 +186,14 @@ void board_init(void)
 	ctimer_count_init(Encoder_R);	//初始化定时器3作为外部计数
 	
 	
-	adc_init(ADC_P00,0);						
-	adc_init(ADC_P01,0);						
-	adc_init(ADC_P05,0);						
-	adc_init(ADC_P06,0);
-	adc_init(ADC_P10,0);						
-	adc_init(ADC_P11,0);						
+	adc_init(ADC_P17,0);						
+	adc_init(ADC_P16,0);						
+	adc_init(ADC_P15,0);						
+	adc_init(ADC_P14,0);
 	adc_init(ADC_P13,0);						
-	adc_init(ADC_P14,0);		
+	adc_init(ADC_P11,0);						
+	adc_init(ADC_P06,0);						
+	adc_init(ADC_P10,0);		
 	
 	imu660ra_init();
 	
