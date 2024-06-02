@@ -7,8 +7,8 @@ float speed_section(float error,char i)
 }
 void Get_Actual_Speed()
 {
-	motor_L_pid.ActValue=((float)encoder_L_get()*ActSpeed_Rate*500);
-	motor_R_pid.ActValue=((float)encoder_R_get()*ActSpeed_Rate*500);
+	motor_L_pid.ActValue=((float)encoder_L_get()*ActSpeed_Rate*200);
+	motor_R_pid.ActValue=((float)encoder_R_get()*ActSpeed_Rate*200);
 //	motor_L_pid.ActValue=((float)encoder_L_get());
 //	motor_R_pid.ActValue=((float)encoder_R_get());
 }
@@ -42,8 +42,8 @@ void Speed_Loop()
         duty_L = duty_max;
     if(duty_R > duty_max)
         duty_R = duty_max;
-//		duty_set(duty_L,duty_R);
-	duty_set(-2000,-2000);
+		duty_set(duty_L,duty_R);
+//		duty_set(0,-2000);
 
 }
 

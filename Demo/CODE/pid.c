@@ -12,10 +12,11 @@ void pid_set(float *arr, PID *pid)
 
 void InitPID(void)
 {
+	//5 10 15 25 40 60 80 100
     motor_L_pid.SetValue        = 0.0;
     motor_L_pid.ActValue        = 0.0;
-    motor_L_pid.KP              = 60;
-    motor_L_pid.KI              = 2.9;
+    motor_L_pid.KP              = 150;
+    motor_L_pid.KI              = 8;
     motor_L_pid.KD              = 0;
     motor_L_pid.ek              = 0.0;
     motor_L_pid.ek_1            = 0.0;
@@ -27,8 +28,8 @@ void InitPID(void)
 
     motor_R_pid.SetValue        = 0.0;
     motor_R_pid.ActValue        = 0.0;
-		motor_R_pid.KP              = 60;		//25		60
-    motor_R_pid.KI              = 2.9;	//12.5	2.9
+		motor_R_pid.KP              = 150;		//25		60
+    motor_R_pid.KI              = 8;	//12.5	2.9
     motor_R_pid.KD              = 0;		//30		0
     motor_R_pid.ek              = 0.0;
     motor_R_pid.ek_1            = 0.0;

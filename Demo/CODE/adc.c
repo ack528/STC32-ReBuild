@@ -130,18 +130,18 @@ float error_get(int *temp, int flag)
 //  printf("%d,%d\r\n",abs(temp[5]-temp[6]),A);
     if (flag == cross)
     {
-        awm = (float)(temp[0] - temp[3]) / (float)(temp[0] + temp[3]);
+        awm = (float)(temp[0] - temp[4]) / (float)(temp[0] + temp[4]);
     }
     else if (flag == right_angle)
     {
         L = sqrt((double)temp[0] * (double)temp[0] + (double)temp[1] * (double)temp[1]);
-        R = sqrt((double)temp[2] * (double)temp[2] + (double)temp[3] * (double)temp[3]);
+        R = sqrt((double)temp[3] * (double)temp[3] + (double)temp[4] * (double)temp[4]);
         awm = (L - R) / (L + R);
     }
     else
     {
         L = sqrt((double)temp[0] * (double)temp[0] + (double)temp[1] * (double)temp[1]);
-        R = sqrt((double)temp[2] * (double)temp[2] + (double)temp[3] * (double)temp[3]);
+        R = sqrt((double)temp[3] * (double)temp[3] + (double)temp[4] * (double)temp[4]);
         awm = (L - R) / (L + R);
     }
     return awm;

@@ -8,7 +8,7 @@ int encoder_L_get(void)
 	   }	   // 左右轮当前速度
 	   else
 	   {
-			temp = 0-ctimer_count_read(Encoder_L);
+			temp =0 - ctimer_count_read(Encoder_L);
 	   }
 	ctimer_count_clean(Encoder_L); // 编码器清零
 
@@ -27,7 +27,7 @@ if(DIR_Encoder_R == 0)
     temp = ctimer_count_read(Encoder_R) ; }// 左右轮当前速度
 else
 {
-	temp = 0-ctimer_count_read(Encoder_R);
+	temp =0 - ctimer_count_read(Encoder_R);
 }
 //printf("%d\r\n",temp);
 	ctimer_count_clean(Encoder_R); // 编码器清零

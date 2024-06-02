@@ -12,7 +12,7 @@ int main()
     board_init();
     pit_timer_ms(TIM_1, 5);
     printf("pit init\r\n");
-    pit_timer_ms(TIM_4, 2);
+    pit_timer_ms(TIM_4, 5);
     NVIC_SetPriority(TIMER1_IRQn, 2);
     NVIC_SetPriority(UART4_IRQn, 3);
     InitPID();
@@ -22,8 +22,8 @@ int main()
     }
     EnableGlobalIRQ(); // 开启总中断
     printf("all init\r\n");
-    motor_L_pid.SetValue = 160; //还需要更改speed.c中的速度和speed_goal
-    motor_R_pid.SetValue = 160;
+    motor_L_pid.SetValue = 150; //还需要更改speed.c中的速度和speed_goal
+    motor_R_pid.SetValue = 150;
     printf("motor pid set value\r\n");
     while (1)
     {
@@ -39,55 +39,47 @@ int main()
 //            }
 //            else
 //            {
-//                state_detect(adc_value);
-//                switch (state[state_lead])
-//                {
-//										case Track:
-//													P67 = 0;
-//													Track_Action(adc_value);
-//													break;
-//										case Big_Circ_Left:
-//													P67 = 1;
-//													Circ_Left_Action(adc_value);
-//													break;
-//										case Small_Circ_Left:
-//													Circ_Left_Action(adc_value);
-//													break;
-//										case Big_Circ_Right:
-//													Circ_Right_Action(adc_value);
-//													break;
-//										case Small_Circ_Right:
-//													Circ_Right_Action(adc_value);
-//													break;
-//										case Obstacle:
-//													printf(".....\r\n");
-//													Obstacle_Action();
-//													break;
-//										case Stop:
-//													Stop_Action();
-//                }
-									adc_get(adc_value);
+                state_detect(adc_value);
+                switch (state[state_lead])
+                {
+										case Track:
+													P67 = 0;
+													Track_Action(adc_value);
+													break;
+										case Big_Circ_Left:
+													P67 = 1;
+													Circ_Left_Action(adc_value);
+													break;
+										case Small_Circ_Left:
+													Circ_Left_Action(adc_value);
+													break;
+										case Big_Circ_Right:
+													Circ_Right_Action(adc_value);
+													break;
+										case Small_Circ_Right:
+													Circ_Right_Action(adc_value);
+													break;
+										case Obstacle:
+													printf(".....\r\n");
+													Obstacle_Action();
+													break;
+										case Stop:
+													Stop_Action();
+                }
+//									adc_get(adc_value);						//ADC_Test
 //            }
-            //i+=1;
-            ////if(i%400==0)
-            ////{
-            ////motor_R_pid.SetValue=0;
-            ////motor_L_pid.SetValue=0;
-            ////}
-            ////else
-            //  if(i%200==0)
-            //{
-            //  motor_L_pid.SetValue+=15;
-            //  motor_R_pid.SetValue+=15;
-            //}
-            //else if(i>1800)
-            //{
-            //motor_R_pid.SetValue=0;
-            //motor_L_pid.SetValue=0;
-            //}
-//					lcd_showint32(0,0,(int)state_lead,4);
+
+
+//						lcd_showint32(0,0,(int)motor_L_pid.ActValue,4);
+//						lcd_showint32(0,1,(int)motor_R_pid.ActValue,4);
+						
+//						lcd_showint32(0,0,(int)adc_value[0],4);
+//						lcd_showint32(0,1,(int)adc_value[1],4);
+//						lcd_showint32(0,2,(int)adc_value[2],4);
+//						lcd_showint32(0,3,(int)adc_value[3],4);
+//						lcd_showint32(0,4,(int)adc_value[4],4);
             uart_delay++;
-            if (uart_delay > 4)
+            if (uart_delay > 2)
             {
                 uart_delay = 0;
                 printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
