@@ -5,6 +5,7 @@ extern int state_lead;
 extern int Flag_Circ;
 extern int Flag_Obstacle;
 extern int flag_turn;
+
 void state_detect(int* temp);
 int Track_Jump(int* adc_value);
 int Big_Circ_Left_Jump(int* Flag);
@@ -12,6 +13,8 @@ int Small_Circ_Left_Jump(int* Flag);
 int Big_Circ_Right_Jump(int* Flag);
 int Small_Circ_Right_Jump(int* Flag);
 int Obstacle_Jump(int *flag);
+uint8 stop_jump(void);
+
 enum element
 {
 	Stop=0,

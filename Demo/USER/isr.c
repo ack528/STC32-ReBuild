@@ -152,6 +152,8 @@ void TM4_Isr() interrupt 20
 {
 
 	 Speed_Loop();
+// printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
+//													 motor_L_pid.SetValue, motor_R_pid.SetValue);
 
 	 TIM4_CLEAR_FLAG;
 

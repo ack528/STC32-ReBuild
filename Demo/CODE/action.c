@@ -1,12 +1,10 @@
 #include "headfile.h"
-float speed_goal = 220;
+extern float speed_goal;
 float error = 0;
 float error_rate = 0;
 int count = 0;
 void Track_Action(int *temp)//直线
 {
-//  static float angle=0;
-//  error_rate=error_rate_count1(temp[1],temp[2]);
     if (flag_turn == cross)
     {
         beep_on();
@@ -18,9 +16,6 @@ void Track_Action(int *temp)//直线
     error = error_get(temp, flag_turn);
     speed_goal = speed_section(error, state[state_lead]);//修改目标速度，没写完，默认返回值都是60
     Dir_Loop(error, speed_goal, flag_turn);
-//		printf("%d,%d,%d,%d,\r\n",temp[0],temp[1],temp[2],temp[3]);
-//  printf("%f,%f,%f,%f,%f\r\n",    error,  motor_L_pid.SetValue,   motor_R_pid.SetValue,
-//                                          motor_L_pid.ActValue,   motor_R_pid.ActValue);
 }
 
 
@@ -123,12 +118,6 @@ void Stop_Action()//停车
 {
     motor_L_pid.SetValue = 0;
     motor_R_pid.SetValue = 0;
-    motor_L_pid.KP = 70;
-    motor_R_pid.KP = 70;
-    motor_L_pid.KI = 2.6;
-    motor_R_pid.KI = 2.6;
-    motor_L_pid.KD = 0;
-    motor_R_pid.KD = 0;
 }
 
 
@@ -138,6 +127,6 @@ void beep_on()//蜂鸣器开
 }
 void beep_off()//蜂鸣器关
 {
-    P67 = 0;
+    P67 	= 0;
     count = 0;
 }

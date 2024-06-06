@@ -6,6 +6,7 @@
 typedef struct
 {
     float SetValue; // 期望值 参考值
+		float SetValueTmp;
     float ActValue; // 实际值
     float KP; // 比例因子
     float KI; // 积分因子

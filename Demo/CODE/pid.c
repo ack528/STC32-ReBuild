@@ -3,6 +3,7 @@ PID motor_L_pid = {0};
 PID motor_R_pid = {0};
 PID speed_ctrl_pid = {0};
 PID dir_loop_pid = {0};
+
 void pid_set(float *arr, PID *pid)
 {
     pid->KP = arr[0];
@@ -12,10 +13,10 @@ void pid_set(float *arr, PID *pid)
 
 void InitPID(void)
 {
-	//5 10 15 25 40 60 80 100
     motor_L_pid.SetValue        = 0.0;
+		motor_L_pid.SetValueTmp     = 0.0;
     motor_L_pid.ActValue        = 0.0;
-    motor_L_pid.KP              = 150;
+    motor_L_pid.KP              = 0;
     motor_L_pid.KI              = 8;
     motor_L_pid.KD              = 0;
     motor_L_pid.ek              = 0.0;
@@ -27,9 +28,10 @@ void InitPID(void)
     motor_L_pid.PIDout          = 0;
 
     motor_R_pid.SetValue        = 0.0;
+		motor_R_pid.SetValueTmp    	= 0.0;
     motor_R_pid.ActValue        = 0.0;
-		motor_R_pid.KP              = 150;		//25		60
-    motor_R_pid.KI              = 8;	//12.5	2.9
+		motor_R_pid.KP              = 0;		//25		60 150
+    motor_R_pid.KI              = 6;	//12.5	2.9   8
     motor_R_pid.KD              = 0;		//30		0
     motor_R_pid.ek              = 0.0;
     motor_R_pid.ek_1            = 0.0;
@@ -53,20 +55,6 @@ void InitPID(void)
     dir_loop_pid.PIDmax         = 30.00;
     dir_loop_pid.PIDmin         = -30.00;
 
-//    dir_loop_pid.SetValue       = 0.00;
-//    dir_loop_pid.ActValue    		= 0.00;
-//    dir_loop_pid.KP             = 240;
-//    dir_loop_pid.KI         		= 0;
-//    dir_loop_pid.KD         		= 400;
-//    dir_loop_pid.ek         		= 0.00;
-//    dir_loop_pid.ek_1           = 0.00;
-//    dir_loop_pid.ek_2           = 0.00;
-//    dir_loop_pid.ek_sum    		  = 0.00;
-//    dir_loop_pid.Sum_max        = 1.00;
-//    dir_loop_pid.Sum_min        = -1.00;
-//    dir_loop_pid.PIDmax         = 30.00;
-//    dir_loop_pid.PIDmin         = -30.00;
-
 }
 //flag=1时，对pid输出进行限幅
 float PID_Control_Inc(PID *pid, int flag)
@@ -74,12 +62,7 @@ float PID_Control_Inc(PID *pid, int flag)
     float inc;
 
     pid->ek = pid->SetValue - pid->ActValue;
-//  if(pid->SetValue!=0&& pid->ek<9)
-//  {
-//  return 0;
-//  }
     inc = pid->KP * (pid->ek - pid->ek_1) + pid->KI * pid->ek + pid->KD * (pid->ek - 2 * pid->ek_1 + pid->ek_2);
-
     pid->ek_2 = pid->ek_1;
     pid->ek_1 = pid->ek;
 

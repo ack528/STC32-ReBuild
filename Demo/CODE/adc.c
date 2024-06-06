@@ -1,4 +1,5 @@
 #include "headfile.h"
+#include "adc.h"
 
 void adc_get(int *temp)
 {
@@ -58,19 +59,16 @@ void adc_get(int *temp)
     temp[6] = temp[6] < 1 ? 1 : temp[6];
     temp[7] = temp[7] < 1 ? 1 : temp[7];
 		
-//		temp[0]=temp[0]>1500?1500:temp[0];
-//		temp[1]=temp[1]>1500?1500:temp[1];
-//		temp[2]=temp[2]>1500?1500:temp[2];
-//		temp[3]=temp[3]>1500?1500:temp[3];
+		temp[0]=temp[0]>1500?1500:temp[0];
+		temp[1]=temp[1]>1500?1500:temp[1];
+		temp[2]=temp[2]>1500?1500:temp[2];
+		temp[3]=temp[3]>1500?1500:temp[3];
+		temp[4]=temp[4]>1500?1500:temp[4];
+		temp[5]=temp[5]>1500?1500:temp[5];
+		temp[6]=temp[6]>1500?1500:temp[6];
+		temp[7]=temp[7]>1500?1500:temp[7];
 
-//		temp[0]=MeanFilter((adc_once(ADC_P00, ADC_12BIT)),5);
-//		temp[1]=(adc_once(ADC_P01, ADC_12BIT));
-//		temp[2]=(adc_once(ADC_P05, ADC_12BIT));
-//		temp[3]=(adc_once(ADC_P06, ADC_12BIT));
-//    temp[4] = (adc_once(ADC_P10, ADC_12BIT));
-//    temp[5] = (adc_once(ADC_P11, ADC_12BIT));
-//    temp[6] = (adc_once(ADC_P13, ADC_12BIT));
-//    temp[7] = (adc_once(ADC_P14, ADC_12BIT));
+
 }
 int MeanFilter(int *arr, int n)
 {
@@ -85,49 +83,12 @@ int MeanFilter(int *arr, int n)
     result = Sum / n;
     return (int)result;
 }
-int max_count(int a, int b)
-{
-    int temp_max;
 
-//  temp_max=a>b?a:b;
-//  temp=(temp_max-100)*10/1100;
-//  temp=(temp>10)?10:temp;
-//  return temp;
-    temp_max = a > b ? a : b;
-    return temp_max;
-//    temp_min=a>b?b:a;
-//    if(temp_max>200)
-//    {return 1;}
-//    else
-//    {return 0;}
-
-}
-int min_count(int a, int b)
-{
-    int temp_min;
-
-//  temp_max=a>b?a:b;
-//  temp=(temp_max-100)*10/1100;
-//  temp=(temp>10)?10:temp;
-//  return temp;
-    temp_min = a < b ? a : b;
-    return temp_min;
-//  temp_min=a>b?b:a;
-//  if(temp_max>200)
-//  {return 1;}
-//  else
-//  {return 0;}
-
-}
 
 float error_get(int *temp, int flag)
 {
     float L, R, awm;
-//  int A=1,B=0;
 
-//  A=(int)abs(temp[5]-temp[6])/100;
-//  printf("%d\r\n",sizeof(temp[5]));
-//  printf("%d,%d\r\n",abs(temp[5]-temp[6]),A);
     if (flag == cross)
     {
         awm = (float)(temp[0] - temp[4]) / (float)(temp[0] + temp[4]);

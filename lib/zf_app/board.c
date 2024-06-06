@@ -116,11 +116,12 @@ uint32 set_clk(void)
 
 
 
-
-
+uint8 imu660_init = 1;
+uint8 start_dalay = 0;
 void board_init(void)
 {
 
+	
 	EAXFR = 1;				// 使能访问XFR
 	CKCON = 0x00;			// 设置外部数据总线为最快
 	WTST = 0;               // 设置程序代码等待参数，赋值为0可将CPU执行程序的速度设置为最快
@@ -174,12 +175,7 @@ void board_init(void)
 	IE2 = 0;
 	TMOD = 0;
   wireless_uart_init();
-//  uart_init(WIRELESS_UART, WIRELESS_UART_RX_PIN, WIRELESS_UART_TX_PIN, WIRELESS_UART_BAUD, WIRELESS_TIMER_N);	//初始化串口  
 
-	
-	
-//		printf("pppppppppppppppp\r\n");
-	
   EnableGlobalIRQ(); // 开启总中断
 	
 	ctimer_count_init(Encoder_L);	//初始化定时器0作为外部计数
@@ -195,29 +191,32 @@ void board_init(void)
 	adc_init(ADC_P06,0);						
 	adc_init(ADC_P10,0);		
 	
-	imu660ra_init();
+	imu660_init = imu660ra_init();
 	
 //	dl1b_init();
 	lcd_init();
 	
-//	ips114_init();								
-	
-//	 PID_Init();
-//	pwm_init(PWMB_CH3_P33,50,800);
-//	pwm_init(PWMB_CH4_P77,50,800);
-	
-//	pwm_init(PWM_L, 17000,0); 
-//	pwm_init(PWM_R, 17000,0); 
-//	gpio_mode(P6_4, GPO_PP);
-//	gpio_mode(P6_0, GPO_PP);
 
-    pwm_init(PWM_1, 17000, 0); //初始化PWM1
-    pwm_init(PWM_2, 17000, 0); //初始化PWM2
-    pwm_init(PWM_3, 17000, 0); //初始化PWM3
-    pwm_init(PWM_4, 17000, 0); //初始化PWM4
-	
+	gpio_mode(P6_7, GPO_PP);
 
-		printf("begin\r\n");
+	pwm_init(PWM_1, 17000, 0); //初始化PWM1
+	pwm_init(PWM_2, 17000, 0); //初始化PWM2
+	pwm_init(PWM_3, 17000, 0); //初始化PWM3
+	pwm_init(PWM_4, 17000, 0); //初始化PWM4
+
+	printf("board init\r\n");
+	
+	pit_timer_ms(TIM_1, 5);
+	pit_timer_ms(TIM_4, 5);
+	NVIC_SetPriority(TIMER1_IRQn, 2);
+	NVIC_SetPriority(UART4_IRQn, 3);
+	printf("pit init\r\n");
+	
+	for(start_dalay = 0; start_dalay < 10; start_dalay++) //延迟两秒
+  {
+		 delay_ms(200);
+  }     
+	
 	
 }
 

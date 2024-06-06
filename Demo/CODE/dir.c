@@ -1,44 +1,24 @@
 #include "headfile.h"
+#include "dir.h"
 float temp = 0;
-//void Dir_Loop(float error,float speed_goal,int flag)
-//{
 
-//if(flag==0)
-//{
-//  count++;
-//  if(count<60)
-//  {
-//      P67=1;
-//  }
-//  else
-//  {
-//      P67=0;
-//      count=0;
-//  }
-//
-//  dir_loop_pid.KP=Kp_Select_1(error);
-//}
-//else
-//{
-//  count=0;
-//  P67=0;
-//      dir_loop_pid.KP=Kp_Select(error);
-//}
+void Dir_Loop(float error, float speed_goal, int flag)
+{
+    {
+//      dir_loop_pid.KP = Kp_Select(error);
+			
+        dir_loop_pid.ek =  error;
+				temp =  fabs(error) * 400* dir_loop_pid.ek //800 250  /600 300
+								+ 100 * dir_loop_pid.ek
+								- 0 * imu660ra_gyro_z / 65.6
+								+ 0 * (dir_loop_pid.ek - dir_loop_pid.ek_1);
 
-//  dir_loop_pid.ek =  error;
-//   temp= dir_loop_pid.KP* dir_loop_pid.ek
-////    -imu660ra_gyro_z / 65.6
-//  + dir_loop_pid.KD * (dir_loop_pid.ek - dir_loop_pid.ek_1)
-//  ;
-//  dir_loop_pid.ek_1=dir_loop_pid.ek;
-//  motor_L_pid.SetValue=speed_goal-temp;
-//  motor_R_pid.SetValue=speed_goal+temp;
-//}
+        dir_loop_pid.ek_1 = dir_loop_pid.ek;
 
-
-
-
-
+    }
+    motor_L_pid.SetValue = speed_goal - temp;
+    motor_R_pid.SetValue = speed_goal + temp;
+}
 
 
 float  Kp_Select(float error)
@@ -69,97 +49,3 @@ float  Kp_Select(float error)
 //    else
 //      { return 400;}
 }
-void Dir_Loop(float error, float speed_goal, int flag)
-{
-//  if(flag==0)
-//  {
-//
-//  dir_loop_pid.KP=Kp_Select(error);
-//      dir_loop_pid.ek =  error;
-//   temp= dir_loop_pid.KP * dir_loop_pid.ek  +100*dir_loop_pid.ek
-//  - imu660ra_gyro_z / 65.6
-//  + dir_loop_pid.KD * (dir_loop_pid.ek - dir_loop_pid.ek_1)
-//  ;
-//  dir_loop_pid.ek_1=dir_loop_pid.ek;
-// ;
-//  }
-//  else
-//  printf("%f\r\n",error);
-    {
-        dir_loop_pid.KP = Kp_Select(error);
-        dir_loop_pid.ek =  error;
-				temp =  fabs(error) * 800* dir_loop_pid.ek //800 250  /600 300
-								+ 250 * dir_loop_pid.ek
-								- imu660ra_gyro_z / 65.6
-								+ dir_loop_pid.KD * (dir_loop_pid.ek - dir_loop_pid.ek_1);
-//      printf("%f\r\n",error);
-        dir_loop_pid.ek_1 = dir_loop_pid.ek;
-//  temp=temp;
-    }
-//  printf("%f\r\n",temp);
-    motor_L_pid.SetValue = speed_goal - temp;
-    motor_R_pid.SetValue = speed_goal + temp;
-}
-
-
-//void angle_loop()
-//{
-//  float angle_speed=0;
-//  angle_speed=(motor_R_pid.SetValue-motor_L_pid.SetValue)/15.5;
-//
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//void Dir_Loop(float error,float speed_goal)
-//{
-
-//  float inc=0;
-////    dir_loop_pid.KP=Kp_Select(error)*0.6;
-//      dir_loop_pid.ActValue =  error;
-
-//      inc=PID_Control_Inc(&dir_loop_pid,1);
-//  if(inc>-3&&inc<3)
-//  {inc=0;}
-//      temp+=inc;
-//  dir_loop_pid.ek_1=dir_loop_pid.ek;
-////temp=temp*0.6;
-////    printf("%f\r\n",temp);
-////    temp=temp>speed_goal?speed_goal:temp;
-////    temp=temp<(0-speed_goal)?(0-speed_goal):temp;
-//  temp=temp>100?100:temp;
-//  temp=temp<(-100)?(-100):temp;
-//  motor_L_pid.SetValue=speed_goal+temp;
-//  motor_R_pid.SetValue=speed_goal-temp;
-//}
