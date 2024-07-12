@@ -3,7 +3,7 @@
 int duty_L=800,duty_R=800;
 float speed_section(float error,char i)
 {
-	return 240;
+	return 230;
 }
 
 void Get_Actual_Speed()
@@ -30,8 +30,8 @@ void Speed_Loop()
 		motor_L_pid.SetValueTmp = motor_L_pid.SetValue;
 		motor_R_pid.SetValueTmp = motor_R_pid.SetValue;
 
-    inc_L = PID_Control_Inc(&motor_L_pid,0);
-    inc_R = PID_Control_Inc(&motor_R_pid,0);
+    inc_L = PID_Control_Inc(&motor_L_pid,1);
+    inc_R = PID_Control_Inc(&motor_R_pid,1);
 		
     duty_L += inc_L;			//增量式pid输出的是增量，要累加
     duty_R += inc_R;			//增量式pid输出的是增量，要累加
@@ -46,7 +46,7 @@ void Speed_Loop()
     if(duty_R > duty_max)
         duty_R = duty_max;
 		duty_set(duty_L,duty_R);
-//		duty_set(0,-2000);
+//		duty_set(3000,3000);
 
 }
 

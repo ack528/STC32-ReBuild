@@ -212,12 +212,15 @@ void board_init(void)
 	NVIC_SetPriority(UART4_IRQn, 3);
 	printf("pit init\r\n");
 	
-	for(start_dalay = 0; start_dalay < 10; start_dalay++) //ÑÓ³ÙÁ½Ãë
+	motor_L_pid.SetValue = 0; 
+  motor_R_pid.SetValue = 0;
+	
+	for(start_dalay = 0; start_dalay < 5; start_dalay++) //ÑÓ³ÙÁ½Ãë
   {
 		 delay_ms(200);
   }     
 	
-	
+
 }
 
 

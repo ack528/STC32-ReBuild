@@ -5,6 +5,8 @@ extern int state_lead;
 extern int Flag_Circ;
 extern int Flag_Obstacle;
 extern int flag_turn;
+extern int Flag_Right_Angle;       //直角不同阶段的指针
+
 
 void state_detect(int* temp);
 int Track_Jump(int* adc_value);
@@ -13,6 +15,7 @@ int Small_Circ_Left_Jump(int* Flag);
 int Big_Circ_Right_Jump(int* Flag);
 int Small_Circ_Right_Jump(int* Flag);
 int Obstacle_Jump(int *flag);
+int Right_Angle_Jump(int *Flag);
 uint8 stop_jump(void);
 
 enum element
@@ -29,6 +32,7 @@ enum element
 	Ramp=9,
 	Garage_Out=10,
 	Garage_In=11,
+	Right_Angle=12
 };
 enum Track
 {

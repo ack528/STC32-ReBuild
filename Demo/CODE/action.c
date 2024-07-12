@@ -14,10 +14,20 @@ void Track_Action(int *temp)//直线
         beep_off();
     }
     error = error_get(temp, flag_turn);
-    speed_goal = speed_section(error, state[state_lead]);//修改目标速度，没写完，默认返回值都是60
+    speed_goal = speed_section(error, state[state_lead]);
     Dir_Loop(error, speed_goal, flag_turn);
 }
 
+void Right_Angle_Action(int *temp)//直角
+{
+	switch(Flag_Obstacle)
+	{
+		case 1:
+			Track_Action(temp);
+		break;
+		
+	}
+}
 
 void Circ_Left_Action(int *temp)//左环
 {

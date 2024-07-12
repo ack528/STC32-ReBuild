@@ -128,7 +128,7 @@ void TM0_Isr() interrupt 1
 void TM1_Isr() interrupt 3
 {
 
-			if(!TIM1_Flag)
+	if(!TIM1_Flag)
 	{
 
 	TIM1_Flag=1;
