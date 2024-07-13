@@ -1,6 +1,6 @@
 #include "headfile.h"
 #include "speed.h"
-int duty_L=800,duty_R=800;
+int duty_L=0,duty_R=0;
 float speed_section(float error,char i)
 {
 	return 230;

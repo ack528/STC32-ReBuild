@@ -101,30 +101,31 @@ int Right_Angle_Jump(int *Flag)   //直角
     case 1:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
 		
-        if (Sum_Distance > 300)
+        if (Sum_Distance > 200)
+        {
+            Sum_Distance = 0;
+            (*Flag)++;
+//					  state_lead = 6;
+        }
+        break;
+    case 2:
+        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
+		
+        if (Sum_Distance > 160)
         {
             Sum_Distance = 0;
             (*Flag)++;
 					  state_lead = 6;
         }
-        break;
-//    case 2:
-//        Sum_Angle += Single_Angle_Get();
-//        if (Sum_Angle > 20)
-//        {
-//            Sum_Angle = 0;
-//            (*Flag)++;
-//        }
-//        break;
 //    case 3:
-//        Sum_Angle += Single_Angle_Get();
-//        if (Sum_Angle > 295)
+//        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
+//		
+//        if (Sum_Distance > 200)
 //        {
-//            Sum_Angle = 0;
+//            Sum_Distance = 0;
 //            (*Flag)++;
-//						return 1;
+//					  state_lead = 6;
 //        }
-//        break;
 //    case 4:
 //        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
 //        if (Sum_Distance > 40)

@@ -21,16 +21,16 @@ int main()
 //						dl1b_get_distance();
             imu660ra_get_gyro();
 						state_detect(adc_value); //ÔªËØÅÐ¶Ï
-            if (stop_jump() == 1)
-            {
-                state_lead = 6;
-                Stop_Action();
-            }
-            else
-            {
+//            if (stop_jump() == 1)
+//            {
+//                state_lead = 6;
+//                Stop_Action();
+//            }
+//            else
+//            {
 									Action();
 //									Pid_Test_1();
-						}
+//						}
 	
 						Lcd_Show_Para();
             TIM1_Flag = 0;
@@ -82,7 +82,7 @@ void Action(void)
 							break;
 				case Right_Angle:
 							BEEP = 0;
-							Track_Action(adc_value);
+							Right_Angle_Action(adc_value);
 							break;
 				case Big_Circ_Left:
 							Circ_Left_Action(adc_value);

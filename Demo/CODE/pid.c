@@ -30,9 +30,9 @@ void InitPID(void)
     motor_R_pid.SetValue        = 0.0;
 		motor_R_pid.SetValueTmp    	= 0.0;
     motor_R_pid.ActValue        = 0.0;
-		motor_R_pid.KP              = 90;		//25	 160 
-    motor_R_pid.KI              = 15;	  //12.5	  7
-    motor_R_pid.KD              = 0;		//30		0
+		motor_R_pid.KP              = 90;		
+    motor_R_pid.KI              = 15;	  
+    motor_R_pid.KD              = 0;		
     motor_R_pid.ek              = 0.0;
     motor_R_pid.ek_1            = 0.0;
     motor_R_pid.ek_2            = 0.0;

@@ -1,5 +1,6 @@
 #include "headfile.h"
 extern float speed_goal;
+extern int Flag_Right_Angle; 
 float error = 0;
 float error_rate = 0;
 int count = 0;
@@ -20,12 +21,15 @@ void Track_Action(int *temp)//Ö±Ïß
 
 void Right_Angle_Action(int *temp)//Ö±½Ç
 {
-	switch(Flag_Obstacle)
+	switch(Flag_Right_Angle)
 	{
 		case 1:
 			Track_Action(temp);
-		break;
-		
+			break;
+		case 2:
+			motor_L_pid.SetValue = 170; 
+			motor_R_pid.SetValue = 130;
+			break;
 	}
 }
 
