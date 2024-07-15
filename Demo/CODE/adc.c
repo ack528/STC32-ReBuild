@@ -50,23 +50,23 @@ void adc_get(int *temp)
     temp[6] = MeanFilter(a7, 4);
     temp[7] = MeanFilter(a8, 4);
 
-    temp[0] = temp[0] < 1 ? 1 : temp[0];
-    temp[1] = temp[1] < 1 ? 1 : temp[1];
-    temp[2] = temp[2] < 1 ? 1 : temp[2];
-    temp[3] = temp[3] < 1 ? 1 : temp[3];
-		temp[4] = temp[4] < 1 ? 1 : temp[4];
-    temp[5] = temp[5] < 1 ? 1 : temp[5];
-    temp[6] = temp[6] < 1 ? 1 : temp[6];
-    temp[7] = temp[7] < 1 ? 1 : temp[7];
-		
-		temp[0]=temp[0]>1500?1500:temp[0];
-		temp[1]=temp[1]>1500?1500:temp[1];
-		temp[2]=temp[2]>1500?1500:temp[2];
-		temp[3]=temp[3]>1500?1500:temp[3];
-		temp[4]=temp[4]>1500?1500:temp[4];
-		temp[5]=temp[5]>1500?1500:temp[5];
-		temp[6]=temp[6]>1500?1500:temp[6];
-		temp[7]=temp[7]>1500?1500:temp[7];
+//    temp[0] = temp[0] < 1 ? 1 : temp[0];
+//    temp[1] = temp[1] < 1 ? 1 : temp[1];
+//    temp[2] = temp[2] < 1 ? 1 : temp[2];
+//    temp[3] = temp[3] < 1 ? 1 : temp[3];
+//		temp[4] = temp[4] < 1 ? 1 : temp[4];
+//    temp[5] = temp[5] < 1 ? 1 : temp[5];
+//    temp[6] = temp[6] < 1 ? 1 : temp[6];
+//    temp[7] = temp[7] < 1 ? 1 : temp[7];
+//		
+//		temp[0]=temp[0]>1500?1500:temp[0];
+//		temp[1]=temp[1]>1500?1500:temp[1];
+//		temp[2]=temp[2]>1500?1500:temp[2];
+//		temp[3]=temp[3]>1500?1500:temp[3];
+//		temp[4]=temp[4]>1500?1500:temp[4];
+//		temp[5]=temp[5]>1500?1500:temp[5];
+//		temp[6]=temp[6]>1500?1500:temp[6];
+//		temp[7]=temp[7]>1500?1500:temp[7];
 
 
 }
@@ -84,7 +84,7 @@ int MeanFilter(int *arr, int n)
     return (int)result;
 }
 
-
+float ADC_error = 0;
 float error_get(int *temp, int flag)
 {
     float L, R, awm;
@@ -105,6 +105,7 @@ float error_get(int *temp, int flag)
         R = sqrt((double)temp[3] * (double)temp[3] + (double)temp[4] * (double)temp[4]);
         awm = (L - R) / (L + R);
     }
+		ADC_error = awm;
     return awm;
 
 }

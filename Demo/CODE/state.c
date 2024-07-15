@@ -2,12 +2,12 @@
 #include "state.h"
 int state_lead = 0;
 int Flag_Circ = 0;              //圆环不同阶段的指针
-int Flag_Right_Angle = 1;       //直角不同阶段的指针
 int Flag_Obstacle = 0;
 int flag_turn = 0;              //直路元素的指针
 float Sum_Distance = 0, Sum_Angle = 0;
 
-char state[30] = {Right_Angle, Track, Track, Track, Track, Track, Stop};  //赛道元素顺序
+char state[30] = {Track, Obstacle, Track, Track, Track, Track ,
+									Track, Track, Track, Track, Stop};  //赛道元素顺序
 
 void state_detect(int *temp)
 {
@@ -16,9 +16,6 @@ void state_detect(int *temp)
     {
 				case Track:
 						if (Track_Jump(temp))                   state_lead++;
-						break;
-				case Right_Angle:
-						if (Right_Angle_Jump(&Flag_Right_Angle)) state_lead++;
 						break;
 				case Big_Circ_Left:
 						if (Big_Circ_Left_Jump(&Flag_Circ))     state_lead++;
@@ -73,8 +70,9 @@ int Track_Jump(int *temp)
 						}
 						break;
 				case Obstacle:
-						if (dl1b_distance_mm < 600)
+						if (dl1b_distance_mm < 1000)
 						{
+								
 								Flag_Obstacle = 1;
 								return 1;
 						}
@@ -82,63 +80,13 @@ int Track_Jump(int *temp)
 				case Stop:
 						return 1;
 						break;
-				case Garage_In:
-						if (P26 == 0)
-						{
-								return 1;
-						}
-						break;
 				default:
 						break;
     }
 		
     return 0;
 }
-int Right_Angle_Jump(int *Flag)   //直角
-{
-		switch (*Flag)
-    {
-    case 1:
-        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
-		
-        if (Sum_Distance > 200)
-        {
-            Sum_Distance = 0;
-            (*Flag)++;
-//					  state_lead = 6;
-        }
-        break;
-    case 2:
-        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
-		
-        if (Sum_Distance > 160)
-        {
-            Sum_Distance = 0;
-            (*Flag)++;
-					  state_lead = 6;
-        }
-//    case 3:
-//        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;//计算实例里程数
-//		
-//        if (Sum_Distance > 200)
-//        {
-//            Sum_Distance = 0;
-//            (*Flag)++;
-//					  state_lead = 6;
-//        }
-//    case 4:
-//        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-//        if (Sum_Distance > 40)
-//        {
-//            Sum_Distance = 0;
-//            (*Flag) = 0;
-//            return 1;
-//        }
-    default:
-        break;
-    }
-    return 0;
-}
+
 uint32 stop_flag = 0;
 uint8 stop_jump(void)
 {
@@ -332,6 +280,8 @@ int Small_Circ_Right_Jump(int *Flag)
     }
     return 0;
 }
+
+// 30 15 -50 100 30
 int Obstacle_Jump(int *Flag)
 {
     switch (*Flag)
@@ -342,53 +292,60 @@ int Obstacle_Jump(int *Flag)
         {
             Sum_Angle = 0;
             (*Flag)++;
+						
         }
+				
         break;
     case 2:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 30)
+        if (Sum_Distance > 15)
         {
             Sum_Distance = 0;
             (*Flag)++;
-
+						
         }
         break;
     case 3:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -30)
+        if (Sum_Angle < -60)
         {
             P32 = 1;
             Sum_Angle = 0;
             (*Flag)++;
+						
         }
         break;
     case 4:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 30)
+        if (Sum_Distance > 80)
         {
             Sum_Distance = 0;
             (*Flag)++;
+						
         }
         break;
     case 5:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -20)
+        if (Sum_Angle > 17)							//低速25
         {
+						//BEEP = 1;
             Sum_Angle = 0;
             (*Flag)++;
+						state_lead = 10;
+						return 1 ;
         }
-        break;
-    default:
         break;
     case 6:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 45)
+        if (Sum_Distance > 30)
         {
             Sum_Distance = 0;
             (*Flag) = 0;
-            return 1 ;
+						
+            
         }
-
+		default:
+        break;
     }
     return 0;
 }

@@ -1,24 +1,23 @@
 #include "headfile.h"
-#define BEEP P67
-#define LED  P52
 
 extern int duty_L,duty_R;
-
-float speed_goal = 280;
+extern uint16 dl1b_distance_mm;
+float speed_goal = 250;
 int main()
 {
     board_init();
 		InitPID();
     EnableGlobalIRQ();
-    motor_L_pid.SetValue = 220; 
-    motor_R_pid.SetValue = 220;
+    motor_L_pid.SetValue = 250; 
+    motor_R_pid.SetValue = 250;
     printf("Start\r\n");
     while (1)
     {
         if (TIM1_Flag)
         {
             LED = 0;
-//						dl1b_get_distance();
+//						BEEP = 0;
+						dl1b_get_distance();
             imu660ra_get_gyro();
 						state_detect(adc_value); //ÔªËØÅÐ¶Ï
 //            if (stop_jump() == 1)
@@ -51,7 +50,7 @@ void Lcd_Show_Para(void)
 //		lcd_showint32(0,2,(int)adc_value[2],4);
 //		lcd_showint32(0,3,(int)adc_value[3],4);
 //		lcd_showint32(0,4,(int)adc_value[4],4);
-
+//	  lcd_showuint16(0,0,dl1b_distance_mm);
 		uart_delay++;
 		if (uart_delay > 2)
 		{
@@ -60,10 +59,14 @@ void Lcd_Show_Para(void)
 //																	motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp,
 //																		(float)(duty_L/10),(float)(duty_R/10));
 				
-				printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
-														motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp);
+//				printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
+//														motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp);
+			
+//				printf("%f\r\n", speed_goal);
 
-//				printf("%d,%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],adc_value[2],
+			  printf("%d,%d\r\n", adc_value[2], (int)(dl1b_distance_mm/10));
+			
+//			  printf("%d,%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],adc_value[2],
 //		    														adc_value[3], adc_value[4]);
 //				printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
 //																	adc_value[3], adc_value[4]);
@@ -77,12 +80,7 @@ void Action(void)
 		switch (state[state_lead])
 		{
 				case Track:
-							BEEP = 0;
 							Track_Action(adc_value);
-							break;
-				case Right_Angle:
-							BEEP = 0;
-							Right_Angle_Action(adc_value);
 							break;
 				case Big_Circ_Left:
 							Circ_Left_Action(adc_value);
@@ -91,7 +89,6 @@ void Action(void)
 							Circ_Left_Action(adc_value);
 							break;
 				case Big_Circ_Right:
-							P67 = 0;
 							Circ_Right_Action(adc_value);
 							break;
 				case Small_Circ_Right:

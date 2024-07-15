@@ -15,7 +15,6 @@ int Small_Circ_Left_Jump(int* Flag);
 int Big_Circ_Right_Jump(int* Flag);
 int Small_Circ_Right_Jump(int* Flag);
 int Obstacle_Jump(int *flag);
-int Right_Angle_Jump(int *Flag);
 uint8 stop_jump(void);
 
 enum element
@@ -32,7 +31,6 @@ enum element
 	Ramp=9,
 	Garage_Out=10,
 	Garage_In=11,
-	Right_Angle=12
 };
 enum Track
 {

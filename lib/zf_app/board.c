@@ -195,7 +195,7 @@ void board_init(void)
 	
 //	dl1b_init();
 	lcd_init();
-	
+	dl1b_init();
 
 	gpio_mode(P6_7, GPO_PP);
 

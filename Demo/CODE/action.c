@@ -1,36 +1,12 @@
 #include "headfile.h"
 extern float speed_goal;
-extern int Flag_Right_Angle; 
 float error = 0;
-float error_rate = 0;
 int count = 0;
 void Track_Action(int *temp)//直线
 {
-    if (flag_turn == cross)
-    {
-        beep_on();
-    }
-    else
-    {
-        beep_off();
-    }
     error = error_get(temp, flag_turn);
     speed_goal = speed_section(error, state[state_lead]);
     Dir_Loop(error, speed_goal, flag_turn);
-}
-
-void Right_Angle_Action(int *temp)//直角
-{
-	switch(Flag_Right_Angle)
-	{
-		case 1:
-			Track_Action(temp);
-			break;
-		case 2:
-			motor_L_pid.SetValue = 170; 
-			motor_R_pid.SetValue = 130;
-			break;
-	}
 }
 
 void Circ_Left_Action(int *temp)//左环
@@ -114,8 +90,8 @@ void Obstacle_Action(void)
         break;
     case 5:
         speed_goal = speed_section(error, state[state_lead]);
-        motor_L_pid.SetValue = speed_goal * 2;
-        motor_R_pid.SetValue = speed_goal * 0;
+        motor_L_pid.SetValue = speed_goal * 0;
+        motor_R_pid.SetValue = speed_goal * 2;
         break;
     case 6:
         P32 = 0;

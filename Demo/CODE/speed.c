@@ -1,9 +1,24 @@
 #include "headfile.h"
 #include "speed.h"
 int duty_L=0,duty_R=0;
+int sect_flag = 0;
+int sect_count = 0;
 float speed_section(float error,char i)
 {
-	return 230;
+//	if((error>0.25)||(error<-0.25)||(sect_flag==1))  
+//	{
+//		sect_flag = 1;
+//		sect_count++;
+//		
+//		if(sect_count>25)
+//		{
+//			sect_flag = 0;
+//			sect_count = 0;
+//		}
+//		return 180;
+//	}
+//	else
+		return 230;
 }
 
 void Get_Actual_Speed()
