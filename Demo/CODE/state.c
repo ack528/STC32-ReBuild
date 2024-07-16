@@ -6,8 +6,11 @@ int Flag_Obstacle = 0;
 int flag_turn = 0;              //直路元素的指针
 float Sum_Distance = 0, Sum_Angle = 0;
 
-char state[30] = {Track, Obstacle, Track, Big_Circ_Right, Track, Small_Circ_Left ,
-									Track, Ramp, Track, Track, Stop};  //赛道元素顺序
+//char state[30] = {Track, Obstacle, Track, Big_Circ_Right, Track, Small_Circ_Left ,
+//									Track, Ramp, Track, Track, Stop};  //赛道元素顺序
+
+char state[30] = {Track, Small_Circ_Left, Track, Small_Circ_Left, Track, Ramp ,
+									Track, Obstacle, Track, Track, Stop};  //赛道元素顺序
 
 void state_detect(int *temp)
 {
@@ -241,10 +244,11 @@ int Small_Circ_Left_Jump(int *Flag)
         break;
     case 3:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 285)
+        if (Sum_Angle > 270)
         {
             Sum_Angle = 0;
             (*Flag)++;
+						
         }
         break;
     case 4:
@@ -253,11 +257,12 @@ int Small_Circ_Left_Jump(int *Flag)
         {
             Sum_Distance = 0;
             (*Flag)++;
+//						state_lead = 10;
         }
 				break;
 		case 5:
 				Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-				if (Sum_Distance > 100)
+				if (Sum_Distance > 80)
 				{
 						BEEP = 0;
 						Sum_Distance = 0;
@@ -280,7 +285,6 @@ int Small_Circ_Right_Jump(int *Flag)
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
         if (Sum_Distance > 60)
         {
-//						state_lead = 10;
             Sum_Distance = 0;
             (*Flag)++;
         }
@@ -342,7 +346,7 @@ int Obstacle_Jump(int *Flag)
         break;
     case 2:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 15)
+        if (Sum_Distance > 20)
         {
             Sum_Distance = 0;
             (*Flag)++;
@@ -351,7 +355,7 @@ int Obstacle_Jump(int *Flag)
         break;
     case 3:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -60)
+        if (Sum_Angle < -45)
         {
             P32 = 1;
             Sum_Angle = 0;
@@ -361,7 +365,7 @@ int Obstacle_Jump(int *Flag)
         break;
     case 4:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 80)
+        if (Sum_Distance > 65)
         {
             Sum_Distance = 0;
             (*Flag)++;
@@ -384,8 +388,6 @@ int Obstacle_Jump(int *Flag)
         {
             Sum_Distance = 0;
             (*Flag) = 0;
-						
-            
         }
 		default:
         break;

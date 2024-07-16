@@ -3,22 +3,39 @@
 int duty_L=0,duty_R=0;
 int sect_flag = 0;
 int sect_count = 0;
+extern char state[30];
+//enum element
+//{
+//	Stop=0,
+//	Start=1,
+//	Track=2,
+//	Bend=3,
+//	Big_Circ_Left=4,
+//	Big_Circ_Right=5,
+//	Small_Circ_Left=6,
+//	Small_Circ_Left=7,
+//	Obstacle=8,
+//	Ramp=9,
+//	Garage_Out=10,
+//	Garage_In=11,
+//};
 float speed_section(float error,char i)
 {
-//	if((error>0.25)||(error<-0.25)||(sect_flag==1))  
-//	{
-//		sect_flag = 1;
-//		sect_count++;
-//		
-//		if(sect_count>25)
-//		{
-//			sect_flag = 0;
-//			sect_count = 0;
-//		}
-//		return 180;
-//	}
-//	else
-		return 190;
+		if((state[state_lead]==Big_Circ_Left)||(state[state_lead]==Big_Circ_Right)||
+			(state[state_lead]==Small_Circ_Left)||(state[state_lead]==Small_Circ_Left))
+		{
+			return 240;
+		}
+		else if((state[state_lead]==Ramp))
+		{
+			return 200;
+		}
+		else if((state[state_lead]==Obstacle))
+		{
+			return 190;
+		}
+		else
+			return 180;
 }
 
 void Get_Actual_Speed()
