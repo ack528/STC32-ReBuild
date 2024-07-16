@@ -18,7 +18,7 @@ float speed_section(float error,char i)
 //		return 180;
 //	}
 //	else
-		return 230;
+		return 190;
 }
 
 void Get_Actual_Speed()

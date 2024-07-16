@@ -30,6 +30,9 @@ void Circ_Left_Action(int *temp)//×ó»·
         motor_L_pid.SetValue = speed_goal;
         motor_R_pid.SetValue = speed_goal;
         break;
+		case 5:
+				Dir_Loop(error, speed_goal, flag_turn);
+        break;
     }
 }
 
@@ -54,6 +57,9 @@ void Circ_Right_Action(int *temp)//ÓÒ»·
     case 4:
         motor_L_pid.SetValue = speed_goal;
         motor_R_pid.SetValue = speed_goal;
+        break;
+		case 5:
+				Dir_Loop(error, speed_goal, flag_turn);
         break;
     }
 }

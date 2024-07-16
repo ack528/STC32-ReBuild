@@ -15,6 +15,7 @@ int Small_Circ_Left_Jump(int* Flag);
 int Big_Circ_Right_Jump(int* Flag);
 int Small_Circ_Right_Jump(int* Flag);
 int Obstacle_Jump(int *flag);
+int Ramp_jump(void);
 uint8 stop_jump(void);
 
 enum element

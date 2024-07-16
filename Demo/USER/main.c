@@ -2,7 +2,7 @@
 
 extern int duty_L,duty_R;
 extern uint16 dl1b_distance_mm;
-float speed_goal = 250;
+float speed_goal = 230;
 int main()
 {
     board_init();
@@ -64,12 +64,12 @@ void Lcd_Show_Para(void)
 			
 //				printf("%f\r\n", speed_goal);
 
-			  printf("%d,%d\r\n", adc_value[2], (int)(dl1b_distance_mm/10));
+//			  printf("%d,%d\r\n", adc_value[2], (int)(dl1b_distance_mm/10));
 			
 //			  printf("%d,%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],adc_value[2],
 //		    														adc_value[3], adc_value[4]);
-//				printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
-//																	adc_value[3], adc_value[4]);
+				printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
+																	adc_value[3], adc_value[4]);
 
 		}
 }
@@ -96,6 +96,9 @@ void Action(void)
 							break;
 				case Obstacle:
 							Obstacle_Action();
+							break;
+				case Ramp:
+							Track_Action(adc_value);
 							break;
 				case Stop:
 							Stop_Action();
