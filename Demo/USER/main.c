@@ -2,14 +2,16 @@
 
 extern int duty_L,duty_R;
 extern uint16 dl1b_distance_mm;
+
 float speed_goal = 230;
+
 int main()
 {
     board_init();
 		InitPID();
     EnableGlobalIRQ();
-    motor_L_pid.SetValue = 250; 
-    motor_R_pid.SetValue = 250;
+    motor_L_pid.SetValue = 220; 
+    motor_R_pid.SetValue = 220;
     printf("Start\r\n");
     while (1)
     {
@@ -59,17 +61,17 @@ void Lcd_Show_Para(void)
 //																	motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp,
 //																		(float)(duty_L/10),(float)(duty_R/10));
 				
-//				printf("%f,%f,%f,%f\r\n", motor_L_pid.ActValue, motor_R_pid.ActValue,
+//				printf("%f,%f,%f,%f\r\n", speed_goal, temp,
 //														motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp);
 			
-//				printf("%f\r\n", speed_goal);
+//					printf("%f\r\n", pid_temp);
 
 //			  printf("%d,%d\r\n", adc_value[2], (int)(dl1b_distance_mm/10));
 			
 //			  printf("%d,%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],adc_value[2],
 //		    														adc_value[3], adc_value[4]);
-				printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
-																	adc_value[3], adc_value[4]);
+//				printf("%d,%d,%d,%d\r\n", adc_value[0], adc_value[1],
+//																	adc_value[3], adc_value[4]);
 
 		}
 }
@@ -80,6 +82,9 @@ void Action(void)
 		switch (state[state_lead])
 		{
 				case Track:
+							Track_Action(adc_value);
+							break;
+				case Long_Track:
 							Track_Action(adc_value);
 							break;
 				case Big_Circ_Left:

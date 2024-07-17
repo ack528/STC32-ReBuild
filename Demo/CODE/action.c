@@ -1,7 +1,9 @@
 #include "headfile.h"
 extern float speed_goal;
+
 float error = 0;
 int count = 0;
+
 void Track_Action(int *temp)//直线
 {
     error = error_get(temp, flag_turn);
@@ -14,53 +16,53 @@ void Circ_Left_Action(int *temp)//左环
     error = error_get(temp, flag_turn);
     switch (Flag_Circ)
     {
-    case 1:
-        speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
-        Dir_Loop(error, speed_goal, flag_turn);
-        break;
-    case 2:
-        motor_L_pid.SetValue = 0;
-        motor_R_pid.SetValue = speed_goal * 1.3;
-        break;
-    case 3:
-        speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
-        Dir_Loop(error, speed_goal, flag_turn);
-        break;
-    case 4:
-        motor_L_pid.SetValue = speed_goal;
-        motor_R_pid.SetValue = speed_goal;
-        break;
-		case 5:
-				Dir_Loop(error, speed_goal, flag_turn);
-        break;
+				case 1:
+						speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
+				case 2:
+						motor_L_pid.SetValue = speed_goal * 0.5;
+						motor_R_pid.SetValue = speed_goal * 1.5;
+						break;
+				case 3:
+						speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
+				case 4:
+						motor_L_pid.SetValue = speed_goal;
+						motor_R_pid.SetValue = speed_goal;
+						break;
+				case 5:
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
     }
 }
 
 
 void Circ_Right_Action(int *temp)//右环
 {
-    error = error_get(temp, flag_turn);
-    speed_goal = speed_section(error, state[state_lead]);
+		error = error_get(temp, flag_turn);
     switch (Flag_Circ)
     {
-    case 1:
-        Dir_Loop(error, speed_goal, flag_turn);
-        break;
-    case 2:
-        motor_L_pid.SetValue = speed_goal * 1.5;
-        motor_R_pid.SetValue = 0;
-        break;
-    case 3:
-        speed_goal = speed_section(error, state[state_lead]);
-        Dir_Loop(error, speed_goal, flag_turn);
-        break;
-    case 4:
-        motor_L_pid.SetValue = speed_goal;
-        motor_R_pid.SetValue = speed_goal;
-        break;
-		case 5:
-				Dir_Loop(error, speed_goal, flag_turn);
-        break;
+				case 1:
+						speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
+				case 2:
+						motor_L_pid.SetValue = speed_goal * 1.5;
+						motor_R_pid.SetValue = speed_goal	* 0.5;
+						break;
+				case 3:
+						speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
+				case 4:
+						motor_L_pid.SetValue = speed_goal;
+						motor_R_pid.SetValue = speed_goal;
+						break;
+				case 5:
+						Dir_Loop(error, speed_goal, flag_turn);
+						break;
     }
 }
 

@@ -1,16 +1,21 @@
 #include "headfile.h"
 #include "state.h"
 int state_lead = 0;
-int Flag_Circ = 0;              //圆环不同阶段的指针
-int Flag_Obstacle = 0;
-int flag_turn = 0;              //直路元素的指针
+int Flag_Long_Track = 1;        
+int Flag_Circ = 0;              //圆环
+int Flag_Obstacle = 0;					//障碍
+int flag_turn = 0;             
 float Sum_Distance = 0, Sum_Angle = 0;
 
 //char state[30] = {Track, Obstacle, Track, Big_Circ_Right, Track, Small_Circ_Left ,
 //									Track, Ramp, Track, Track, Stop};  //赛道元素顺序
 
-char state[30] = {Track, Small_Circ_Left, Track, Small_Circ_Left, Track, Ramp ,
-									Track, Obstacle, Track, Track, Stop};  //赛道元素顺序
+char state[30] = {Long_Track, Track, Small_Circ_Left,
+									Long_Track, Track, Ramp,
+									Long_Track,	Track, Obstacle,
+									Long_Track, Track, Obstacle,
+									Long_Track, Track, Track, 
+									Stop};  //赛道元素顺序
 
 void state_detect(int *temp)
 {
@@ -19,6 +24,9 @@ void state_detect(int *temp)
     {
 				case Track:
 						if (Track_Jump(temp))                   state_lead++;
+						break;
+				case Long_Track:
+						if(Long_Track_Jump())										state_lead++;
 						break;
 				case Big_Circ_Left:
 						if (Big_Circ_Left_Jump(&Flag_Circ))     state_lead++;
@@ -38,6 +46,7 @@ void state_detect(int *temp)
 				case Ramp:
 						if (Ramp_Jump())      									state_lead++;
 						break;
+				
 				default:
 						break;
     }
@@ -94,6 +103,52 @@ int Track_Jump(int *temp)
 						break;
     }
     return 0;
+}
+int Long_Track_Jump(void)
+{
+	 switch (Flag_Long_Track)
+    {
+			case 1:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 100)
+					{
+							Sum_Distance = 0;
+							Flag_Long_Track++;
+							return 1;
+					}
+					break;
+			case 2:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 150)
+					{
+							Sum_Distance = 0;
+							Flag_Long_Track++;
+							return 1;
+					}
+					break;
+			case 3:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 300)
+					{
+							Sum_Distance = 0;
+							Flag_Long_Track++;
+							return 1;
+					}
+					break;
+			case 4:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 150)
+					{
+							Sum_Distance = 0;
+							Flag_Long_Track++;
+							return 1;
+					}
+					break;
+			default:
+					break;
+    }
+
+	return 0;
 }
 
 uint32 stop_flag = 0;
@@ -228,45 +283,39 @@ int Small_Circ_Left_Jump(int *Flag)
     case 1:
 				BEEP = 1;
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 60)
+        if (Sum_Distance > 50)
         {
             Sum_Distance = 0;
             (*Flag)++;
+						
         }
         break;
     case 2:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 40)
-        {
-            Sum_Angle = 0;
-            (*Flag)++;
-        }
-        break;
-    case 3:
-        Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 270)
+        if (Sum_Angle > 21)
         {
             Sum_Angle = 0;
             (*Flag)++;
 						
         }
         break;
-    case 4:
-        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 60)
+    case 3:
+        Sum_Angle += Single_Angle_Get();
+        if (Sum_Angle > 295)
         {
-            Sum_Distance = 0;
+            Sum_Angle = 0;
             (*Flag)++;
-//						state_lead = 10;
+						
         }
-				break;
-		case 5:
+        break;
+		case 4:
 				Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-				if (Sum_Distance > 80)
+				if (Sum_Distance > 65)
 				{
 						BEEP = 0;
 						Sum_Distance = 0;
 						(*Flag) = 0;
+//						state_lead = 10;
 						return 1;
 				}
 				break;
@@ -283,43 +332,39 @@ int Small_Circ_Right_Jump(int *Flag)
     case 1:
 				BEEP = 1;
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 60)
+        if (Sum_Distance > 50)
         {
             Sum_Distance = 0;
             (*Flag)++;
+						
         }
         break;
     case 2:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -40)
+        if (Sum_Angle <-21)
         {
             Sum_Angle = 0;
             (*Flag)++;
+						
         }
         break;
     case 3:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -285)
+        if (Sum_Angle <-295)
         {
             Sum_Angle = 0;
             (*Flag)++;
+//						state_lead = 10;
         }
         break;
-    case 4:
-        Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 60)
-        {
-            Sum_Distance = 0;
-            (*Flag)++;
-        }
-				break;
-		case 5:
+		case 4:
 				Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-				if (Sum_Distance > 100)
+				if (Sum_Distance > 65)
 				{
 						BEEP = 0;
 						Sum_Distance = 0;
 						(*Flag) = 0;
+//						state_lead = 10;
 						return 1;
 				}
 				break;
@@ -374,7 +419,7 @@ int Obstacle_Jump(int *Flag)
         break;
     case 5:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 17)							//低速25
+        if (Sum_Angle > 17)							
         {
 						BEEP = 0;
             Sum_Angle = 0;
@@ -394,7 +439,7 @@ int Obstacle_Jump(int *Flag)
     }
     return 0;
 }
-int Ramp_jump(void)
+int Ramp_Jump(void)
 {
 	Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
 	BEEP = 1;

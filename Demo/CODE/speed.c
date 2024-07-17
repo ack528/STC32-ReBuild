@@ -1,30 +1,20 @@
 #include "headfile.h"
 #include "speed.h"
+
 int duty_L=0,duty_R=0;
 int sect_flag = 0;
 int sect_count = 0;
+
 extern char state[30];
-//enum element
-//{
-//	Stop=0,
-//	Start=1,
-//	Track=2,
-//	Bend=3,
-//	Big_Circ_Left=4,
-//	Big_Circ_Right=5,
-//	Small_Circ_Left=6,
-//	Small_Circ_Left=7,
-//	Obstacle=8,
-//	Ramp=9,
-//	Garage_Out=10,
-//	Garage_In=11,
-//};
+extern int Flag_Track_Accu;
+extern int Track_Accuing;
+
 float speed_section(float error,char i)
 {
 		if((state[state_lead]==Big_Circ_Left)||(state[state_lead]==Big_Circ_Right)||
-			(state[state_lead]==Small_Circ_Left)||(state[state_lead]==Small_Circ_Left))
+			(state[state_lead]==Small_Circ_Left)||(state[state_lead]==Small_Circ_Right))
 		{
-			return 240;
+			return 230;
 		}
 		else if((state[state_lead]==Ramp))
 		{
@@ -34,8 +24,15 @@ float speed_section(float error,char i)
 		{
 			return 190;
 		}
+		else if(state[state_lead]==Long_Track)
+		{
+			return 50;
+		}
 		else
-			return 180;
+		{
+			return 190;
+		}
+			
 }
 
 void Get_Actual_Speed()
