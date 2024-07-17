@@ -16,10 +16,10 @@
 //#define DIR_L   P64
 //#define DIR_R   P60
 
-#define PWM_1 PWMA_CH4P_P66    // 左正
-#define PWM_2 PWMA_CH3P_P64		 // 左负
-#define PWM_3 PWMA_CH1P_P60    // 右正
-#define PWM_4 PWMA_CH2P_P62		 // 右负
+#define PWM_1 PWMA_CH2P_P62    // 左正
+#define PWM_2 PWMA_CH1P_P60		 // 左负
+#define PWM_3 PWMA_CH3P_P64    // 右正
+#define PWM_4 PWMA_CH4P_P66		 // 右负
 
 /****************中断时间***********/
 

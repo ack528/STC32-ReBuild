@@ -18,15 +18,19 @@ float speed_section(float error,char i)
 		}
 		else if((state[state_lead]==Ramp))
 		{
-			return 200;
+			return 220;
 		}
 		else if((state[state_lead]==Obstacle))
 		{
-			return 190;
+			return 210;
 		}
 		else if(state[state_lead]==Long_Track)
 		{
-			return 50;
+			return 250;
+		}
+		else if(state[state_lead]==Slow_Track)
+		{
+			return 190;
 		}
 		else
 		{
@@ -75,7 +79,7 @@ void Speed_Loop()
     if(duty_R > duty_max)
         duty_R = duty_max;
 		duty_set(duty_L,duty_R);
-//		duty_set(3000,3000);
+//		duty_set(0,-2000);
 
 }
 

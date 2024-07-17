@@ -22,7 +22,7 @@ void Circ_Left_Action(int *temp)//左环
 						break;
 				case 2:
 						motor_L_pid.SetValue = speed_goal * 0.5;
-						motor_R_pid.SetValue = speed_goal * 1.5;
+						motor_R_pid.SetValue = speed_goal * 1;
 						break;
 				case 3:
 						speed_goal = speed_section(error, state[state_lead]);		//修改目标速度，没写完，默认返回值固定
@@ -49,7 +49,7 @@ void Circ_Right_Action(int *temp)//右环
 						Dir_Loop(error, speed_goal, flag_turn);
 						break;
 				case 2:
-						motor_L_pid.SetValue = speed_goal * 1.5;
+						motor_L_pid.SetValue = speed_goal * 1;
 						motor_R_pid.SetValue = speed_goal	* 0.5;
 						break;
 				case 3:

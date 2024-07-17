@@ -1,7 +1,8 @@
 #include "headfile.h"
 #include "state.h"
 int state_lead = 0;
-int Flag_Long_Track = 1;        
+int Flag_Long_Track = 1; 				//长直道
+int Flag_Slow_Track = 1;				//慢速路
 int Flag_Circ = 0;              //圆环
 int Flag_Obstacle = 0;					//障碍
 int flag_turn = 0;             
@@ -12,9 +13,9 @@ float Sum_Distance = 0, Sum_Angle = 0;
 
 char state[30] = {Long_Track, Track, Small_Circ_Left,
 									Long_Track, Track, Ramp,
-									Long_Track,	Track, Obstacle,
-									Long_Track, Track, Obstacle,
-									Long_Track, Track, Track, 
+									Long_Track,	Slow_Track, Long_Track, Track, Obstacle,
+															Track, Big_Circ_Right,
+															Track, Track, 
 									Stop};  //赛道元素顺序
 
 void state_detect(int *temp)
@@ -28,6 +29,9 @@ void state_detect(int *temp)
 				case Long_Track:
 						if(Long_Track_Jump())										state_lead++;
 						break;
+				case Slow_Track:
+						if(Slow_Track_Jump())										state_lead++;
+						break;						
 				case Big_Circ_Left:
 						if (Big_Circ_Left_Jump(&Flag_Circ))     state_lead++;
 						break;
@@ -110,7 +114,7 @@ int Long_Track_Jump(void)
     {
 			case 1:
 					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-					if (Sum_Distance > 100)
+					if (Sum_Distance > 200)
 					{
 							Sum_Distance = 0;
 							Flag_Long_Track++;
@@ -119,7 +123,7 @@ int Long_Track_Jump(void)
 					break;
 			case 2:
 					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-					if (Sum_Distance > 150)
+					if (Sum_Distance > 200)
 					{
 							Sum_Distance = 0;
 							Flag_Long_Track++;
@@ -128,7 +132,7 @@ int Long_Track_Jump(void)
 					break;
 			case 3:
 					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-					if (Sum_Distance > 300)
+					if (Sum_Distance > 800)
 					{
 							Sum_Distance = 0;
 							Flag_Long_Track++;
@@ -136,9 +140,11 @@ int Long_Track_Jump(void)
 					}
 					break;
 			case 4:
+					BEEP = 1;
 					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-					if (Sum_Distance > 150)
-					{
+					if (Sum_Distance > 650)
+					{		
+							BEEP = 0;
 							Sum_Distance = 0;
 							Flag_Long_Track++;
 							return 1;
@@ -147,10 +153,36 @@ int Long_Track_Jump(void)
 			default:
 					break;
     }
-
 	return 0;
 }
 
+int Slow_Track_Jump(void)
+{
+	 switch (Flag_Slow_Track)
+    {
+			case 1:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 500)
+					{
+							Sum_Distance = 0;
+							Flag_Slow_Track++;
+							return 1;
+					}
+					break;
+			case 2:
+					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
+					if (Sum_Distance > 200)
+					{
+							Sum_Distance = 0;
+							Flag_Slow_Track++;
+							return 1;
+					}
+					break;
+			default:
+					break;
+    }
+	return 0;
+}
 uint32 stop_flag = 0;
 uint8 stop_jump(void)
 {
@@ -292,7 +324,7 @@ int Small_Circ_Left_Jump(int *Flag)
         break;
     case 2:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 21)
+        if (Sum_Angle > 24)
         {
             Sum_Angle = 0;
             (*Flag)++;
@@ -341,7 +373,7 @@ int Small_Circ_Right_Jump(int *Flag)
         break;
     case 2:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle <-21)
+        if (Sum_Angle <-24)
         {
             Sum_Angle = 0;
             (*Flag)++;
@@ -410,7 +442,7 @@ int Obstacle_Jump(int *Flag)
         break;
     case 4:
         Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-        if (Sum_Distance > 65)
+        if (Sum_Distance > 90)
         {
             Sum_Distance = 0;
             (*Flag)++;
@@ -419,11 +451,12 @@ int Obstacle_Jump(int *Flag)
         break;
     case 5:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 17)							
+        if (Sum_Angle > 12)							
         {
 						BEEP = 0;
             Sum_Angle = 0;
             (*Flag)++;
+//						state_lead = 10;
 						return 1 ;
         }
         break;

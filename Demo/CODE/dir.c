@@ -3,7 +3,7 @@
 float temp = 0;
 extern char state[30];
 int pid_lead = 0;
-int Kp1[5]={400,500,  0,  0,  450};
+int Kp1[5]={300,500,  0,  0,  460};
 int Kp2[5]={180,250,  0,  0,  220};
 int Kd1[5]={	1,	1,	1,	1,	1};
 int Kd2[5]={	0,	0,	0,	0,	0};
@@ -14,6 +14,10 @@ void Dir_Loop(float error, float speed_goal, int flag)
 			(state[state_lead]==Small_Circ_Left)||(state[state_lead]==Small_Circ_Right))
 		{
 				pid_lead = 1;
+		}
+		else if((state[state_lead]==Long_Track))
+		{
+				pid_lead = 0;
 		}
 		else if((state[state_lead]==Ramp))
 		{
