@@ -22,7 +22,7 @@ float speed_section(float error,char i)
 		}
 		else if((state[state_lead]==Obstacle))
 		{
-			return 210;
+			return 190;
 		}
 		else if(state[state_lead]==Long_Track)
 		{

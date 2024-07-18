@@ -162,7 +162,7 @@ int Slow_Track_Jump(void)
     {
 			case 1:
 					Sum_Distance += (motor_L_pid.ActValue + motor_R_pid.ActValue) * isr_time * 0.5;
-					if (Sum_Distance > 500)
+					if (Sum_Distance > 600)
 					{
 							Sum_Distance = 0;
 							Flag_Slow_Track++;
@@ -418,6 +418,7 @@ int Obstacle_Jump(int *Flag)
         {
             Sum_Angle = 0;
             (*Flag)++;
+//						state_lead = 10;
         }
 				
         break;
@@ -427,17 +428,17 @@ int Obstacle_Jump(int *Flag)
         {
             Sum_Distance = 0;
             (*Flag)++;
-						
+//						state_lead = 10;
         }
         break;
     case 3:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle < -45)
+        if (Sum_Angle < -50)
         {
             P32 = 1;
             Sum_Angle = 0;
             (*Flag)++;
-						
+//						state_lead = 10;
         }
         break;
     case 4:
@@ -446,17 +447,17 @@ int Obstacle_Jump(int *Flag)
         {
             Sum_Distance = 0;
             (*Flag)++;
-						
+//						state_lead = 10;
         }
         break;
     case 5:
         Sum_Angle += Single_Angle_Get();
-        if (Sum_Angle > 12)							
+        if (Sum_Angle > 10)							
         {
 						BEEP = 0;
             Sum_Angle = 0;
             (*Flag)++;
-//						state_lead = 10;
+						state_lead = 10;
 						return 1 ;
         }
         break;

@@ -21,14 +21,14 @@ int main()
 						dl1b_get_distance();
             imu660ra_get_gyro();
 						state_detect(adc_value); //ÔªËØÅÐ¶Ï
-            if (stop_jump() == 1)
-            {
-                Stop_Action();
-            }
-            else
-            {
+//            if (stop_jump() == 1)
+//            {
+//                Stop_Action();
+//            }
+//            else
+//            {
 									Action();
-						}
+//						}
 						Lcd_Show_Para();
             TIM1_Flag = 0;
             LED = 1;
@@ -60,7 +60,7 @@ void Lcd_Show_Para(void)
 //				printf("%f,%f,%f,%f\r\n", speed_goal, temp,
 //														motor_L_pid.SetValueTmp, motor_R_pid.SetValueTmp);
 			
-//					printf("%f\r\n", pid_temp);
+//				printf("%f\r\n", pid_temp);
 
 //			  printf("%d,%d\r\n", adc_value[2], (int)(dl1b_distance_mm/10));
 			
