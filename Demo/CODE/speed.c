@@ -26,7 +26,7 @@ float speed_section(float error,char i)
 		}
 		else if(state[state_lead]==Long_Track)
 		{
-			return 250;
+			return 255;
 		}
 		else if(state[state_lead]==Slow_Track)
 		{

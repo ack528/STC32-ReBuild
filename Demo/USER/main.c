@@ -48,7 +48,7 @@ void Lcd_Show_Para(void)
 //		lcd_showint32(0,2,(int)adc_value[2],4);
 //		lcd_showint32(0,3,(int)adc_value[3],4);
 //		lcd_showint32(0,4,(int)adc_value[4],4);
-//	  lcd_showuint16(0,0,dl1b_distance_mm);
+//	  lcd_showuint16(0,5,dl1b_distance_mm);
 		uart_delay++;
 		if (uart_delay > 2)
 		{
